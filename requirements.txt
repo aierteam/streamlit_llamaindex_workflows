@@ -1,6 +1,7 @@
-streamlit>=1.28.0
-llama-index>=0.9.0
-llama-index-llms-openai>=0.1.0
-llama-index-core>=0.9.0
-openai>=1.0.0
-requests>=2.31.0 
+streamlit>=1.25.0
+llama-index>=0.8.3
+openai>=0.27.0
+wikipedia>=1.4.0
+tiktoken>=0.4.0
+dataclasses-json>=0.5.7
+asyncio-tools>=0.0.4
