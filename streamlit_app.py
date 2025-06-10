@@ -1,6 +1,6 @@
 import streamlit as st
 import asyncio
-from wikipedia_rag_workflow import get_workflow
+from WikipediaRAGWorkflow import get_workflow
 
 st.set_page_config(
     page_title="Wikipedia RAG Agent",
