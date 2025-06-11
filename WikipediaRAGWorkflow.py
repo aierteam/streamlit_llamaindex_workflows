@@ -1,4 +1,4 @@
-from llama_index.core import VectorStoreIndex
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
 from llama_index.core.schema import NodeWithScore
 from llama_index.core.response_synthesizers import CompactAndRefine
 from llama_index.core.postprocessor.llm_rerank import LLMRerank
@@ -6,10 +6,6 @@ from llama_index.core.workflow import Context, Workflow, Event, StartEvent, Stop
 
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.llms.openai import OpenAI
-from llama_index.readers.wikipedia import WikipediaReader
-
-import wikipedia
-from wikipedia import PageError
 
 class IngestEvent(Event):
     index: VectorStoreIndex
@@ -23,32 +19,23 @@ class RerankEvent(Event):
 class RAGWorkflow(Workflow):
     @step
     async def ingest(self, ctx: Context, ev: StartEvent) -> IngestEvent | None:
+        dirname = ev.get("dirname")
+        if not dirname:
+            return None
+        
         query = ev.get("query", None)
         if query is None:
             return None
 
         await ctx.set("query", query)
 
-        pages = wikipedia.search(query, results=10)
-        if not pages:
-            return None
-
-        wiki_loader = WikipediaReader()
-        documents = []
-        for page in pages:
-            try:
-                doc = wiki_loader.load_data([page], lang_prefix="en")
-                documents.extend(doc)
-            except PageError:
-                print(f"Skipping “{page}” (PageError).")
-
+        documents = SimpleDirectoryReader(dirname).load_data()
         index = VectorStoreIndex.from_documents(
             documents=documents,
             embed_model=OpenAIEmbedding(model_name="text-embedding-3-small"),
         )
-
         return IngestEvent(index=index)
-
+    
     @step
     async def retrieve(self, ctx: Context, ev: IngestEvent) -> RetrieverEvent | None:
         index = ev.index
@@ -83,9 +70,6 @@ class RAGWorkflow(Workflow):
         return StopEvent(result=response)
 
 def get_workflow(api_key: str) -> RAGWorkflow:
-    # Inject your OpenAI API key into both rerank & synth steps
-    # by monkey-patching or dependency injection before returning.
-    # For simplicity, we’ll set env var here:
     import os
     os.environ["OPENAI_API_KEY"] = api_key
     return RAGWorkflow(timeout=60, verbose=True)
