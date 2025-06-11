@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import asyncio
 from WikipediaRAGWorkflow import get_workflow
 
@@ -15,12 +16,29 @@ st.markdown("**Powered by LlamaIndex Workflows & OpenAI**")
 
 # Sidebar
 with st.sidebar:
+    st.markdown("Upload files (PDF, TXT, DOCX) and ask questions about them. Max 5MB per file.")
+    uploaded = st.file_uploader(
+      "Upload documents",
+      type=["pdf", "txt", "docx"],
+      accept_multiple_files=True,
+    )
     st.markdown("💡 **Try asking:**")
     st.markdown("- 'What is a transformer, and how is it used in large language models?'")
     st.markdown("- 'How does supervised learning differ from unsupervised learning?'")
-    st.markdown("- 'Explain the backpropagation algorithm in neural networks.'")
     st.markdown("- 'Describe the ethical concerns around large language models.'")
-    st.markdown("- 'How has Python influenced research and development in artificial intelligence?'")
+
+# file uploading
+os.makedirs("data", exist_ok=True)
+
+if uploaded:
+    for fu in uploaded:
+        if fu.size > 5 * 1024 * 1024:
+            st.error(f"‘{fu.name}’ is too big ({fu.size/1024**2:.1f} MB). Max is 5 MB.")
+        else:
+            out_path = os.path.join("data", fu.name)
+            with open(out_path, "wb") as f:
+                f.write(fu.getbuffer())
+    st.success(f"Saved {len(uploaded)} files to data.")
 
 # Initialize the workflow agent
 @st.cache_resource(show_spinner=False)
@@ -38,7 +56,9 @@ if "messages" not in st.session_state:
 
 if "agent" not in st.session_state:
     st.session_state.agent = get_agent()
-    st.session_state.dirname = "data"
+    st.session_state.messages = [
+        {"role": "assistant", "content": "Hello! Upload files or ask me anything."}
+    ]
 
 # Display chat history
 for message in st.session_state.messages:
@@ -63,17 +83,27 @@ if prompt := st.chat_input("Ask me anything..."):
             async def run_workflow():
               response_content = ""
               result = await st.session_state.agent.run(
-                  query=prompt, dirname=st.session_state.dirname, streaming=True
+                  query=prompt, dirname="data", streaming=True
               )
 
-              async for chunk in result.async_response_gen():
-                  response_content += chunk
-                  message_placeholder.write(response_content + "▌")
+              if type(result) == str:
+                response_content = result
+              else:
+                async for chunk in result.async_response_gen():
+                    response_content += chunk
+                    message_placeholder.write(response_content + "▌")
 
               return response_content
 
             # Run the async workflow
             final_response = asyncio.run(run_workflow())
+
+            # if final_response == "Empty Response":
+            #   llm = OpenAI(model="gpt-4o")
+            #   final_response = llm.chat([
+            #       ChatMessage(role="system", content="You are a helpful assistant."),
+            #       ChatMessage(role="user", content=prompt)
+            #   ]).message.content
 
             # Display final response
             message_placeholder.write(final_response)
