@@ -107,13 +107,6 @@ if prompt := st.chat_input("Ask me anything..."):
             # Run the async workflow
             final_response = asyncio.run(run_workflow())
 
-            # if final_response == "Empty Response":
-            #   llm = OpenAI(model="gpt-4o")
-            #   final_response = llm.chat([
-            #       ChatMessage(role="system", content="You are a helpful assistant."),
-            #       ChatMessage(role="user", content=prompt)
-            #   ]).message.content
-
             # Display final response
             message_placeholder.write(final_response)
 

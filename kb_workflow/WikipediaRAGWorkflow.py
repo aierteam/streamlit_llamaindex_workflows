@@ -94,16 +94,31 @@ class RAGWorkflow(Workflow):
 
     @step
     async def synthesize(self, ctx: Context, ev: RerankEvent) -> StopEvent:
-        # TODO:
-        # let's try write a synthesize function that optionally uses the nodes to generate a response
-        # nodes will be provided anyway, but the synthesizer needs to decide whether to use the nodes or not
         llm = OpenAI(model="gpt-4o")
-        query = await ctx.get("query", default=None)
+        query = await ctx.get("query")
+        nodes = ev.nodes
 
-        summarizer = CompactAndRefine(llm=llm, streaming=True, verbose=True)
-        response = await summarizer.asynthesize(query, nodes=ev.nodes)
+        # Combine top nodes into a single context block
+        context = "\n\n---\n\n".join([n.node.get_text() for n in nodes]) if nodes else ""
+
+        # Prompt instructs the model to use context only if relevant
+        prompt = f"""
+          You are a helpful assistant. Decide whether the following context is relevant to answer the question. 
+          - If the context is relevant, craft your response using mainly the context and add your own knowledge.
+          - If the context is not relevant, ignore it and answer using only your own knowledge.
+          Include only your answer to the query in your response, and do not explicitly mention that information came from the context.
+
+          Context:
+          {context}
+
+          Question:
+          {query}
+        """
+        messages = [
+            ChatMessage(role="user", content=prompt),
+        ]
+        response = llm.chat(messages).message.content
         return StopEvent(result=response)
-
 
 def get_workflow(api_key: str) -> RAGWorkflow:
     import os
