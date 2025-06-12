@@ -16,14 +16,18 @@ st.markdown("**Powered by LlamaIndex Workflows & OpenAI**")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("Upload files (PDF, TXT, DOCX) and ask questions about them. Max 5MB per file.")
+    st.markdown(
+        "Upload files (PDF, TXT, DOCX) and ask questions about them. Max 5MB per file."
+    )
     uploaded = st.file_uploader(
-      "Upload documents",
-      type=["pdf", "txt", "docx"],
-      accept_multiple_files=True,
+        "Upload documents",
+        type=["pdf", "txt", "docx"],
+        accept_multiple_files=True,
     )
     st.markdown("💡 **Try asking:**")
-    st.markdown("- 'What is a transformer, and how is it used in large language models?'")
+    st.markdown(
+        "- 'What is a transformer, and how is it used in large language models?'"
+    )
     st.markdown("- 'How does supervised learning differ from unsupervised learning?'")
     st.markdown("- 'Describe the ethical concerns around large language models.'")
 
@@ -40,17 +44,19 @@ if uploaded:
                 f.write(fu.getbuffer())
     st.success(f"Saved {len(uploaded)} files to data.")
 
+
 # Initialize the workflow agent
 @st.cache_resource(show_spinner=False)
 def get_agent():
     return get_workflow(api_key=st.secrets.openai_key)
+
 
 # Initialize session state
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Hello! I'm your RAG agent. Ask me anything about your documents."
+            "content": "Hello! I'm your RAG agent. Ask me anything about your documents.",
         }
     ]
 
@@ -81,19 +87,19 @@ if prompt := st.chat_input("Ask me anything..."):
         try:
             # Run the workflow
             async def run_workflow():
-              response_content = ""
-              result = await st.session_state.agent.run(
-                  query=prompt, dirname="data", streaming=True
-              )
+                response_content = ""
+                result = await st.session_state.agent.run(
+                    query=prompt, dirname="data", streaming=True
+                )
 
-              if type(result) == str:
-                response_content = result
-              else:
-                async for chunk in result.async_response_gen():
-                    response_content += chunk
-                    message_placeholder.write(response_content + "▌")
+                if type(result) == str:
+                    response_content = result
+                else:
+                    async for chunk in result.async_response_gen():
+                        response_content += chunk
+                        message_placeholder.write(response_content + "▌")
 
-              return response_content
+                return response_content
 
             # Run the async workflow
             final_response = asyncio.run(run_workflow())
