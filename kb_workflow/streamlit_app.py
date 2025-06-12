@@ -3,6 +3,9 @@ import os
 import asyncio
 from WikipediaRAGWorkflow import get_workflow
 
+# Define data folder relative to current script location
+DATA_FOLDER = os.path.join(os.path.dirname(__file__), "data")
+
 st.set_page_config(
     page_title="RAG Agent - Powered by LlamaIndex Workflows",
     page_icon="📚",
@@ -32,17 +35,17 @@ with st.sidebar:
     st.markdown("- 'Describe the ethical concerns around large language models.'")
 
 # file uploading
-os.makedirs("data", exist_ok=True)
+os.makedirs(DATA_FOLDER, exist_ok=True)
 
 if uploaded:
     for fu in uploaded:
         if fu.size > 5 * 1024 * 1024:
-            st.error(f"‘{fu.name}’ is too big ({fu.size/1024**2:.1f} MB). Max is 5 MB.")
+            st.error(f"'{fu.name}' is too big ({fu.size/1024**2:.1f} MB). Max is 5 MB.")
         else:
-            out_path = os.path.join("data", fu.name)
+            out_path = os.path.join(DATA_FOLDER, fu.name)
             with open(out_path, "wb") as f:
                 f.write(fu.getbuffer())
-    st.success(f"Saved {len(uploaded)} files to data.")
+    st.success(f"Saved {len(uploaded)} files to {DATA_FOLDER}.")
 
 
 # Initialize the workflow agent
@@ -89,7 +92,7 @@ if prompt := st.chat_input("Ask me anything..."):
             async def run_workflow():
                 response_content = ""
                 result = await st.session_state.agent.run(
-                    query=prompt, dirname="data", streaming=True
+                    query=prompt, dirname=DATA_FOLDER, streaming=True
                 )
 
                 if type(result) == str:
