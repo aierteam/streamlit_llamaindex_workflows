@@ -1,6 +1,11 @@
 import streamlit as st
 import os
+import sys
 import asyncio
+
+# Add current directory to Python path to ensure local imports work
+sys.path.append(os.path.dirname(__file__))
+
 from WikipediaRAGWorkflow import get_workflow
 
 # Define data folder relative to current script location
