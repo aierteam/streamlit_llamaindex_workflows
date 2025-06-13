@@ -179,12 +179,30 @@ def build_sql_workflow() -> SimpleSqlDBWorkflow:
 
     # if db_user and db_password:
     # Use SQL Server authentication
-    connection_string = (
-        "mssql+pyodbc://sa:AierTeam%402025@64.227.110.137:1433/AdventureWorksLT2022?"
-        "driver=ODBC+Driver+18+for+SQL+Server&TrustServerCertificate=yes"
-    )
+    import os
 
-    engine = create_engine(connection_string)
+    # Try different connection methods for different environments
+    try:
+        # First try pyodbc with appropriate driver
+        if os.name == "nt":  # Windows
+            driver = "ODBC+Driver+18+for+SQL+Server"
+        else:  # Linux (Streamlit Cloud)
+            driver = "FreeTDS"
+
+        connection_string = (
+            f"mssql+pyodbc://sa:AierTeam%402025@64.227.110.137:1433/AdventureWorksLT2022?"
+            f"driver={driver}&TrustServerCertificate=yes"
+        )
+        # Test the connection
+        engine = create_engine(connection_string)
+        engine.connect().close()
+
+    except Exception as e:
+        # Fallback to pymssql if pyodbc fails
+        print(f"pyodbc connection failed: {e}")
+        print("Falling back to pymssql...")
+        connection_string = "mssql+pymssql://sa:AierTeam%402025@64.227.110.137:1433/AdventureWorksLT2022"
+        engine = create_engine(connection_string)
 
     sql_database = SQLDatabase(
         engine,
