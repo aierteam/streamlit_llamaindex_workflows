@@ -183,12 +183,8 @@ def build_sql_workflow() -> SimpleSqlDBWorkflow:
 
     # Try different connection methods for different environments
     try:
-        # First try pyodbc with appropriate driver
-        if os.name == "nt":  # Windows
-            driver = "ODBC+Driver+18+for+SQL+Server"
-        else:  # Linux (Streamlit Cloud)
-            driver = "FreeTDS"
-
+        # First try ODBC Driver 17 for SQL Server
+        driver = "ODBC+Driver+17+for+SQL+Server"
         connection_string = (
             f"mssql+pyodbc://sa:AierTeam%402025@64.227.110.137:1433/AdventureWorksLT2022?"
             f"driver={driver}&TrustServerCertificate=yes"
@@ -198,10 +194,14 @@ def build_sql_workflow() -> SimpleSqlDBWorkflow:
         engine.connect().close()
 
     except Exception as e:
-        # Fallback to pymssql if pyodbc fails
-        print(f"pyodbc connection failed: {e}")
-        print("Falling back to pymssql...")
-        connection_string = "mssql+pymssql://sa:AierTeam%402025@64.227.110.137:1433/AdventureWorksLT2022"
+        # Fallback to ODBC Driver 18 for SQL Server
+        print(f"ODBC Driver 17 connection failed: {e}")
+        print("Trying ODBC Driver 18...")
+        driver = "ODBC+Driver+18+for+SQL+Server"
+        connection_string = (
+            f"mssql+pyodbc://sa:AierTeam%402025@64.227.110.137:1433/AdventureWorksLT2022?"
+            f"driver={driver}&TrustServerCertificate=yes"
+        )
         engine = create_engine(connection_string)
 
     sql_database = SQLDatabase(
@@ -269,27 +269,27 @@ def build_sql_workflow() -> SimpleSqlDBWorkflow:
     )
 
 
-# Simple workflow test
-async def test_workflow():
-    workflow = build_sql_workflow()
-    query = "What is the total order amount for each customer?"
-    print(f"\n🔍 Test Query: {query}")
+# # Simple workflow test
+# async def test_workflow():
+#     workflow = build_sql_workflow()
+#     query = "What is the total order amount for each customer?"
+#     print(f"\n🔍 Test Query: {query}")
 
-    try:
-        start_event = SqlWorkflowStartEvent(query=query)
-        result = await workflow.run(start_event=start_event)
-        print(f"✅ Success! Result:\n{result.response}")
+#     try:
+#         start_event = SqlWorkflowStartEvent(query=query)
+#         result = await workflow.run(start_event=start_event)
+#         print(f"✅ Success! Result:\n{result.response}")
 
-        # Display SQL query if available
-        if result.reference and result.reference.sql_query:
-            print(f"\n🔍 Generated SQL Query:\n{result.reference.sql_query}")
-        if result.reference and result.reference.sql_database_name:
-            print(f"\n📊 Database: {result.reference.sql_database_name}")
+#         # Display SQL query if available
+#         if result.reference and result.reference.sql_query:
+#             print(f"\n🔍 Generated SQL Query:\n{result.reference.sql_query}")
+#         if result.reference and result.reference.sql_database_name:
+#             print(f"\n📊 Database: {result.reference.sql_database_name}")
 
-    except Exception as e:
-        print(f"❌ Failed: {e}")
+#     except Exception as e:
+#         print(f"❌ Failed: {e}")
 
 
-# Run the test
-if __name__ == "__main__":
-    asyncio.run(test_workflow())
+# # Run the test
+# if __name__ == "__main__":
+#     asyncio.run(test_workflow())
