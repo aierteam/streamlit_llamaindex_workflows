@@ -13,8 +13,8 @@
       "./data/lr1.docx",
       "./data/lr2.docx"
     ],
-    "analysis": "Summary \u2014 strengths and weaknesses\n\nStrengths\n- Strong upward academic trajectory: current BS in Biology with 3.85 GPA, Dean\u2019s List, rigorous science coursework (molecular biology, biochemistry, organic chemistry).\n- Substantial, relevant research: two-year molecular biology project, qPCR/Western blot skills, data analysis (R, GraphPad), poster presentation and manuscript in preparation.\n- Solid clinical exposure and patient-facing experience: clinical observership, patient support volunteer work, BLS certified; recommender letter from an attending physician attests to empathy and practical impact.\n- Leadership and teaching: co-leader of a tutoring program, TA experience, supervised peers\u2014evidence of communication and mentorship.\n- Practical lab and technical skills and conversational Spanish \u2014 useful for clinical teamwork and underserved populations.\n- Strong, specific recommendation letters describing intellectual maturity, resilience, professionalism, and teamwork.\n\nWeaknesses / Concerns\n- Early academic record shows weaknesses (D in Gen Chem, W in algebra/trig, low freshman GPA) \u2014 needs clear documentation of sustained improvement (the resume indicates this, but official, complete transcripts should confirm).\n- Limited detail on total clinical hours and direct patient-care responsibilities; most clinical experience appears observational/volunteer rather than hands-on.\n- Minor application inconsistencies (placeholder names, varied institution formatting) \u2014 recommend verification of transcripts/references and clarification of any institutional name mismatches.\n- No MCAT or other standardized metrics provided here (if required, absence would be a gap).\n\nOverall: Strong, well-rounded candidate with excellent research, teaching, and interpersonal strengths; address transcript verification and clarify early academic struggles.",
-    "review": "Decision: Accept \u2014 applicant meets the GPA requirement.\n\nJustification:\n- The official transcript provided shows a cumulative GPA of 3.02 (Qpts 57.50), which is above the 3.0 threshold.\n- Supporting materials (resume, recommendation letters) further indicate strong recent academic performance and strong clinical/research experience; the resume lists an even higher current GPA (3.85), suggesting an upward trend.\n- Recommendation: verify the final/most recent official transcript and resolve minor institution/name inconsistencies before issuing a final offer.",
+    "analysis": "Strengths\n- Strong upward academic performance and current GPA (resume lists 3.85/4.00) with honors \u2014 suggests academic recovery and mastery of upper-level science coursework.\n- Substantial, relevant research experience (designing experiments, qPCR/Western blot, data analysis, poster presentation, manuscript in preparation).\n- Direct clinical exposure and patient-facing volunteer work (observership, patient support, community clinic) with documented interpersonal skills and empathy.\n- Leadership and teaching experience (co-leading tutoring program, TA duties) demonstrating communication, mentoring, and organization.\n- Technical skills (molecular lab techniques, R/GraphPad), BLS certification, and Spanish conversational ability \u2014 all assets for medical training.\n- Strong, affirmative recommendation letters that emphasize intellectual rigor, professionalism, and humanistic qualities.\n\nWeaknesses / Concerns\n- Early transcript shows academic struggles (D in General Chemistry, C\u2019s, and a withdrawal) \u2014 need full, official transcripts from all institutions to confirm overall trend and current cumulative GPA.\n- Some potential administrative/inconsistency issues: differing institution names and repeated signer name (\u201cJoe Smith\u201d appears on both letters) \u2014 recommend verifying recommenders\u2019 identities and letter authenticity.\n- Clinical exposure appears limited in duration (six-week observership) relative to some applicants; quantify total patient-contact hours if available.\n- Minor clerical errors in materials (institution spellings, placeholder bracketed names) \u2014 suggest polishing final application documents.\n\nRecommendation: Request official, complete transcripts and confirm recommender contact details; overall a strong candidate if academic turnaround and documentation are verified.",
+    "review": "Decision: Accept\n\nJustification: The applicant meets the stated admissions requirement\u2014her transcript shows a cumulative GPA of 3.02 (Fall 2020), which is above the 3.0 threshold. Supplementary materials (resume and strong letters of recommendation) further support academic strength, research experience, clinical exposure, and professionalism. Recommend admission pending standard verification of official transcripts and routine checks.",
     "processed": true,
     "is_complete": true,
     "missing_docs": []
@@ -203,23 +203,5 @@
     "missing_docs": [
       "1 recommendation letter"
     ]
-  },
-  {
-    "id": "APP-0011",
-    "student_name": "John Doe",
-    "student_email": "john.doe@email.com",
-    "student_id": "STU-2024-001",
-    "major": "Computer Science",
-    "submission_time": "2025-11-05 12:58:33",
-    "status": "Pending Review",
-    "transcript_path": "./data/transcript.pdf",
-    "resume_path": "./data/resume.docx",
-    "letter_paths": [
-      "./data/lr1.docx",
-      "./data/lr2.docx"
-    ],
-    "analysis": null,
-    "review": null,
-    "processed": false
   }
 ]

@@ -138,25 +138,26 @@ if page == "👨‍🎓 Student Dashboard":
 
             with st.spinner("📤 Saving uploaded files..."):
                 if use_demo_files:
-                    # Use demo files from data folder
-                    transcript_path = os.path.join(SCRIPT_DIR, "data", "transcript.pdf")
-                    resume_path = os.path.join(SCRIPT_DIR, "data", "resume.docx")
-                    letter_paths = [os.path.join(SCRIPT_DIR, "data", "lr1.docx"), os.path.join(SCRIPT_DIR, "data", "lr2.docx")]
+                    # Use demo files from data folder (store as relative paths for portability)
+                    transcript_path = "./data/transcript.pdf"
+                    resume_path = "./data/resume.docx"
+                    letter_paths = ["./data/lr1.docx", "./data/lr2.docx"]
                 else:
-                    # Use uploaded files
-                    transcript_path = os.path.join(SCRIPT_DIR, "temp_uploads", f"{application_id}_transcript_{transcript_file.name}")
-                    resume_path = os.path.join(SCRIPT_DIR, "temp_uploads", f"{application_id}_resume_{resume_file.name}")
+                    # Use uploaded files (store as relative paths for portability)
+                    transcript_path = f"./temp_uploads/{application_id}_transcript_{transcript_file.name}"
+                    resume_path = f"./temp_uploads/{application_id}_resume_{resume_file.name}"
                     letter_paths = []
 
-                    with open(transcript_path, "wb") as f:
+                    # Save files using absolute paths
+                    with open(os.path.join(SCRIPT_DIR, transcript_path.lstrip('./')), "wb") as f:
                         f.write(transcript_file.getbuffer())
 
-                    with open(resume_path, "wb") as f:
+                    with open(os.path.join(SCRIPT_DIR, resume_path.lstrip('./')), "wb") as f:
                         f.write(resume_file.getbuffer())
 
                     for i, letter_file in enumerate(letter_files):
-                        letter_path = os.path.join(SCRIPT_DIR, "temp_uploads", f"{application_id}_letter_{i+1}_{letter_file.name}")
-                        with open(letter_path, "wb") as f:
+                        letter_path = f"./temp_uploads/{application_id}_letter_{i+1}_{letter_file.name}"
+                        with open(os.path.join(SCRIPT_DIR, letter_path.lstrip('./')), "wb") as f:
                             f.write(letter_file.getbuffer())
                         letter_paths.append(letter_path)
 
@@ -313,14 +314,24 @@ else:
 
                             # Create and run workflow
                             async def run_workflow():
+                                # Convert relative paths to absolute paths
+                                def to_absolute_path(path):
+                                    if path and not os.path.isabs(path):
+                                        return os.path.join(SCRIPT_DIR, path.lstrip('./'))
+                                    return path
+
+                                transcript_abs = to_absolute_path(app['transcript_path'])
+                                resume_abs = to_absolute_path(app['resume_path'])
+                                letters_abs = [to_absolute_path(p) for p in app['letter_paths']]
+
                                 ad_workflow = AdmissionWorkflow(
                                     admission_requirments=admission_requirements,
                                     timeout=300
                                 )
                                 ad_startEvent = AdmissionStartEvent(
-                                    transcript_file_path=app['transcript_path'],
-                                    resume_file_path=app['resume_path'],
-                                    recommendation_letter_file_path=app['letter_paths'],
+                                    transcript_file_path=transcript_abs,
+                                    resume_file_path=resume_abs,
+                                    recommendation_letter_file_path=letters_abs,
                                 )
                                 return await ad_workflow.run(start_event=ad_startEvent)
 
