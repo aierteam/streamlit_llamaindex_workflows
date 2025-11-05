@@ -1,0 +1,225 @@
+[
+  {
+    "id": "APP-0001",
+    "student_name": "John Doe",
+    "student_email": "john.doe@email.com",
+    "student_id": "STU-2024-001",
+    "major": "Computer Science",
+    "submission_time": "2025-11-01 09:15:22",
+    "status": "Reviewed",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": "Summary \u2014 strengths and weaknesses\n\nStrengths\n- Strong upward academic trajectory: current BS in Biology with 3.85 GPA, Dean\u2019s List, rigorous science coursework (molecular biology, biochemistry, organic chemistry).\n- Substantial, relevant research: two-year molecular biology project, qPCR/Western blot skills, data analysis (R, GraphPad), poster presentation and manuscript in preparation.\n- Solid clinical exposure and patient-facing experience: clinical observership, patient support volunteer work, BLS certified; recommender letter from an attending physician attests to empathy and practical impact.\n- Leadership and teaching: co-leader of a tutoring program, TA experience, supervised peers\u2014evidence of communication and mentorship.\n- Practical lab and technical skills and conversational Spanish \u2014 useful for clinical teamwork and underserved populations.\n- Strong, specific recommendation letters describing intellectual maturity, resilience, professionalism, and teamwork.\n\nWeaknesses / Concerns\n- Early academic record shows weaknesses (D in Gen Chem, W in algebra/trig, low freshman GPA) \u2014 needs clear documentation of sustained improvement (the resume indicates this, but official, complete transcripts should confirm).\n- Limited detail on total clinical hours and direct patient-care responsibilities; most clinical experience appears observational/volunteer rather than hands-on.\n- Minor application inconsistencies (placeholder names, varied institution formatting) \u2014 recommend verification of transcripts/references and clarification of any institutional name mismatches.\n- No MCAT or other standardized metrics provided here (if required, absence would be a gap).\n\nOverall: Strong, well-rounded candidate with excellent research, teaching, and interpersonal strengths; address transcript verification and clarify early academic struggles.",
+    "review": "Decision: Accept \u2014 applicant meets the GPA requirement.\n\nJustification:\n- The official transcript provided shows a cumulative GPA of 3.02 (Qpts 57.50), which is above the 3.0 threshold.\n- Supporting materials (resume, recommendation letters) further indicate strong recent academic performance and strong clinical/research experience; the resume lists an even higher current GPA (3.85), suggesting an upward trend.\n- Recommendation: verify the final/most recent official transcript and resolve minor institution/name inconsistencies before issuing a final offer.",
+    "processed": true,
+    "is_complete": true,
+    "missing_docs": []
+  },
+  {
+    "id": "APP-0002",
+    "student_name": "Michael Chen",
+    "student_email": "michael.chen@email.com",
+    "student_id": "STU-2024-002",
+    "major": "Business Administration",
+    "submission_time": "2025-11-01 10:32:45",
+    "status": "Incomplete - Missing 1 Letter",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": false,
+    "missing_docs": [
+      "1 recommendation letter"
+    ]
+  },
+  {
+    "id": "APP-0003",
+    "student_name": "Sarah Williams",
+    "student_email": "sarah.williams@email.com",
+    "student_id": "STU-2024-003",
+    "major": "Psychology",
+    "submission_time": "2025-11-02 14:20:18",
+    "status": "Complete",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": true,
+    "missing_docs": []
+  },
+  {
+    "id": "APP-0004",
+    "student_name": "David Martinez",
+    "student_email": "david.martinez@email.com",
+    "student_id": "STU-2024-004",
+    "major": "Mechanical Engineering",
+    "submission_time": "2025-11-02 16:45:33",
+    "status": "Incomplete - Missing Resume",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": null,
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": false,
+    "missing_docs": [
+      "resume"
+    ]
+  },
+  {
+    "id": "APP-0005",
+    "student_name": "Aisha Patel",
+    "student_email": "aisha.patel@email.com",
+    "student_id": "STU-2024-005",
+    "major": "Biology",
+    "submission_time": "2025-11-03 08:12:55",
+    "status": "Complete",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": true,
+    "missing_docs": []
+  },
+  {
+    "id": "APP-0006",
+    "student_name": "James Thompson",
+    "student_email": "james.thompson@email.com",
+    "student_id": "STU-2024-006",
+    "major": "Economics",
+    "submission_time": "2025-11-03 11:25:40",
+    "status": "Incomplete - No Letters",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": false,
+    "missing_docs": [
+      "2 recommendation letters"
+    ]
+  },
+  {
+    "id": "APP-0007",
+    "student_name": "Olivia Anderson",
+    "student_email": "olivia.anderson@email.com",
+    "student_id": "STU-2024-007",
+    "major": "Nursing",
+    "submission_time": "2025-11-04 09:50:12",
+    "status": "Complete",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": true,
+    "missing_docs": []
+  },
+  {
+    "id": "APP-0008",
+    "student_name": "Daniel Kim",
+    "student_email": "daniel.kim@email.com",
+    "student_id": "STU-2024-008",
+    "major": "Data Science",
+    "submission_time": "2025-11-04 13:18:27",
+    "status": "Incomplete - Missing Transcript",
+    "transcript_path": null,
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": false,
+    "missing_docs": [
+      "transcript"
+    ]
+  },
+  {
+    "id": "APP-0009",
+    "student_name": "Sophia Rodriguez",
+    "student_email": "sophia.rodriguez@email.com",
+    "student_id": "STU-2024-009",
+    "major": "Environmental Science",
+    "submission_time": "2025-11-05 07:42:08",
+    "status": "Complete",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": true,
+    "missing_docs": []
+  },
+  {
+    "id": "APP-0010",
+    "student_name": "Ryan O'Connor",
+    "student_email": "ryan.oconnor@email.com",
+    "student_id": "STU-2024-010",
+    "major": "Political Science",
+    "submission_time": "2025-11-05 15:30:50",
+    "status": "Incomplete - Missing 1 Letter",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false,
+    "is_complete": false,
+    "missing_docs": [
+      "1 recommendation letter"
+    ]
+  },
+  {
+    "id": "APP-0011",
+    "student_name": "John Doe",
+    "student_email": "john.doe@email.com",
+    "student_id": "STU-2024-001",
+    "major": "Computer Science",
+    "submission_time": "2025-11-05 12:58:33",
+    "status": "Pending Review",
+    "transcript_path": "./data/transcript.pdf",
+    "resume_path": "./data/resume.docx",
+    "letter_paths": [
+      "./data/lr1.docx",
+      "./data/lr2.docx"
+    ],
+    "analysis": null,
+    "review": null,
+    "processed": false
+  }
+]

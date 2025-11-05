@@ -35,7 +35,7 @@ analyze_application_template = PromptTemplate(
 
     Recommendation Letters: {recommendation_letters}
 
-    Provide a summary of the strengths and weaknesses of the application.
+    Provide a summary of the strengths and weaknesses of the application. Be short and brief in less than 300 words.
     """
 )
 
@@ -51,6 +51,7 @@ admission_requirement_template = PromptTemplate(
 
     Recommendation Letters: {recommendation_letters}
 
+    Provide a final decision on whether to accept or reject the application, along with a brief justification.
     """
 )
 
@@ -77,7 +78,7 @@ class AdmissionWorkflow(Workflow):
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
-        self.llm = OpenAI(model="gpt-5", service_tier="priority")
+        self.llm = OpenAI(model="gpt-5-mini", temperature=0, max_tokens=10000)
         self.admission_requirments = admission_requirments
         self.transcript = None
         self.resume = None
@@ -125,9 +126,12 @@ class AdmissionWorkflow(Workflow):
     async def analyze_application_step(
         self, ctx: Context, ev: AnalyzeApplicationEvent
     ) -> ReviewApplicationEvent | StopEvent:
+        import os
+
+        os.makedirs("./result", exist_ok=True)
         analysis = self.analyze_application()
         await ctx.store.set("analysis", analysis)
-        with open("./analysis_result.txt", "w", encoding="utf-8") as f:
+        with open("./result/analysis_result.txt", "w", encoding="utf-8") as f:
             f.write(str(analysis))
         if self.is_complete():
             return ReviewApplicationEvent()
@@ -138,8 +142,11 @@ class AdmissionWorkflow(Workflow):
     async def review_application_step(
         self, ctx: Context, ev: ReviewApplicationEvent
     ) -> StopEvent:
+        import os
+
+        os.makedirs("./result", exist_ok=True)
         review = self.reivew_application()
-        with open("./review_result.txt", "w", encoding="utf-8") as f:
+        with open("./result/review_result.txt", "w", encoding="utf-8") as f:
             f.write(str(review))
         analysis = await ctx.store.get("analysis")
         final_result = f"Analysis:\n{analysis}\n\nReview:\n{review}"

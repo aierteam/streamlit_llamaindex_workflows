@@ -1,6 +1,2 @@
 lib/
 /*.log
-data/
-temp_uploads/
-analysis_result.txt
-review_result.txt

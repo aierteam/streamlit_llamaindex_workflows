@@ -1,9 +1,0 @@
-streamlit
-llama-index
-llama-index-llms-openai
-llama-index-core
-llama-index-utils-workflow
-docx2txt
-openai
-requests
-nest_asyncio
