@@ -21,8 +21,9 @@ if 'applications' not in st.session_state:
     st.session_state.applications = []
 
 # Data persistence
-DATA_FILE = "./applications_data.json"
-DEFAULT_DATA_FILE = "./applications_data_default.json"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(SCRIPT_DIR, "applications_data.json")
+DEFAULT_DATA_FILE = os.path.join(SCRIPT_DIR, "applications_data_default.json")
 
 def load_applications():
     """Load applications from default file on startup"""
@@ -130,7 +131,7 @@ if page == "👨‍🎓 Student Dashboard":
             st.error("❌ Please upload at least 2 recommendation letters")
         else:
             # Save uploaded files
-            os.makedirs("./temp_uploads", exist_ok=True)
+            os.makedirs(os.path.join(SCRIPT_DIR, "temp_uploads"), exist_ok=True)
 
             application_id = f"APP-{len(st.session_state.applications) + 1:04d}"
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -138,13 +139,13 @@ if page == "👨‍🎓 Student Dashboard":
             with st.spinner("📤 Saving uploaded files..."):
                 if use_demo_files:
                     # Use demo files from data folder
-                    transcript_path = "./data/transcript.pdf"
-                    resume_path = "./data/resume.docx"
-                    letter_paths = ["./data/lr1.docx", "./data/lr2.docx"]
+                    transcript_path = os.path.join(SCRIPT_DIR, "data", "transcript.pdf")
+                    resume_path = os.path.join(SCRIPT_DIR, "data", "resume.docx")
+                    letter_paths = [os.path.join(SCRIPT_DIR, "data", "lr1.docx"), os.path.join(SCRIPT_DIR, "data", "lr2.docx")]
                 else:
                     # Use uploaded files
-                    transcript_path = f"./temp_uploads/{application_id}_transcript_{transcript_file.name}"
-                    resume_path = f"./temp_uploads/{application_id}_resume_{resume_file.name}"
+                    transcript_path = os.path.join(SCRIPT_DIR, "temp_uploads", f"{application_id}_transcript_{transcript_file.name}")
+                    resume_path = os.path.join(SCRIPT_DIR, "temp_uploads", f"{application_id}_resume_{resume_file.name}")
                     letter_paths = []
 
                     with open(transcript_path, "wb") as f:
@@ -154,7 +155,7 @@ if page == "👨‍🎓 Student Dashboard":
                         f.write(resume_file.getbuffer())
 
                     for i, letter_file in enumerate(letter_files):
-                        letter_path = f"./temp_uploads/{application_id}_letter_{i+1}_{letter_file.name}"
+                        letter_path = os.path.join(SCRIPT_DIR, "temp_uploads", f"{application_id}_letter_{i+1}_{letter_file.name}")
                         with open(letter_path, "wb") as f:
                             f.write(letter_file.getbuffer())
                         letter_paths.append(letter_path)
@@ -335,11 +336,13 @@ else:
                             # Load results
                             analysis = None
                             review = None
-                            if os.path.exists("./result/analysis_result.txt"):
-                                with open("./result/analysis_result.txt", "r", encoding="utf-8") as f:
+                            analysis_path = os.path.join(SCRIPT_DIR, "result", "analysis_result.txt")
+                            review_path = os.path.join(SCRIPT_DIR, "result", "review_result.txt")
+                            if os.path.exists(analysis_path):
+                                with open(analysis_path, "r", encoding="utf-8") as f:
                                     analysis = f.read()
-                            if os.path.exists("./result/review_result.txt"):
-                                with open("./result/review_result.txt", "r", encoding="utf-8") as f:
+                            if os.path.exists(review_path):
+                                with open(review_path, "r", encoding="utf-8") as f:
                                     review = f.read()
 
                             # Update application
